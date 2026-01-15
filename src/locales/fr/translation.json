@@ -1,0 +1,9 @@
+{
+  "email": "Email",
+  "password": "Mot de passe",
+  "ID Number": "Numéro Matricule",
+  "confirmedPassword": "Confirmer votre mot de passe ",
+  "Email or ID": "Email ou N° Matricule",
+  "Sign Up": "S'inscrire",
+  "Sign In": "Se connecter"
+}
