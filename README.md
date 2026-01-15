@@ -1,86 +1,69 @@
-# 🎓 MyScholaria
+# I-BC Hub – TV Content Management Platform
 
-**MyScholaria** is a modern and powerful school management platform designed to simplify the daily life of educational institutions. It centralizes student data, class schedules, attendance, grades, and communication tools into a single, intuitive interface. Whether you're a student, teacher, supervisor, or administrator — MyScholaria is built to support your workflow.
+## Overview
 
----
+**I-BC Hub** is an internal content management platform developed for **I-BC Madagascar**.  
+It is used to upload, manage, and publish **TV programs, articles, and media content** for broadcast and digital distribution.
 
-## 💡 What is MyScholaria?
+This is **not a public website**. It is a production tool for TV operations.
 
-MyScholaria is a web application that helps schools manage:
+## Purpose
 
-- 🧑‍🎓 Student records and documents  
-- 🧑‍🏫 Teacher schedules, grading, and lesson tracking  
-- 🧾 Attendance, lateness, and justifications  
-- 📅 Timetables and school calendar  
-- 📊 Grades and bulletins (report cards)  
-- 🗂️ Document uploads (PDF, images, EPUBs)  
-- 🌗 Light/Dark mode UI  
-- 🔐 Secure login via matricule numbers  
+The platform is built to:
 
-Currently, MyScholaria is available as a web application built with **React**, **TypeScript**, and **Material UI**.  
+- Upload and manage TV programs
+- Publish editorial articles
+- Manage media assets (videos, images, documents)
+- Organize content by program, category, and schedule
+- Control content distribution for TV and internal systems
 
-🚧 **Progressive Web App (PWA) improvements are in progress.**  
-📱 **React Native mobile app and messaging system are ideas under consideration for future development.**
+If you treat this like a simple blog CMS, you will misuse it.
 
----
+## Key Features
 
-## 👥 User Roles and Functionalities
+### Content Management
 
-### 🧑‍🎓 Students
-- View timetable, grades, attendance  
-- Download and view official documents  
-- Justify absences or request leave  
-- Submit data and forms (e.g., absences, requests)  
-- *Note: Messaging functionality is not yet available but planned for future versions.*
+- Create, edit, and delete articles
+- Draft and publish editorial content
+- Schedule content publication
+- Categorize content by program and theme
 
-### 👩‍🏫 Teachers
-- Take attendance and track student presence  
-- Assign and update grades  
-- View their course schedule  
-- Upload course materials  
+### TV Program Management
 
-### 👮 Supervisors
-- Monitor daily attendance per class  
-- Validate or reject justifications  
-- Generate presence reports  
+- Program creation and metadata management
+- Episode handling
+- Broadcast scheduling
+- Archive of past programs
 
-### 🧑‍💼 Administrators
-- Manage all users and roles  
-- Create schedules and assign teachers  
-- Upload official files per student  
-- Publish results and bulletins  
+### Media Upload
 
----
+- Video uploads for TV usage
+- Image uploads (thumbnails, banners)
+- File validation (format, size, integrity)
 
-## ⚙️ Tech Stack
+### User Roles
 
-- **Frontend**: React + TypeScript  
-- **UI Framework**: Material UI (MUI)  
-- **State Management**: React Context API  
-- **Routing**: React Router  
-- **Storage**: localStorage (for theme and auth status)  
-- **Backend & Hosting**: Firebase (Authentication, Realtime Database / Firestore, Hosting)  
-- **PWA**: Work in progress, planned to be installable and responsive  
-- **Mobile App**: React Native is an idea under consideration  
+- **Admin** – full system access
+- **Editor** – create and manage content
+- **Viewer** – read-only access
 
----
+No shared accounts. No unclear permissions.
 
-## 🛠️ Roadmap
+### Workflow
 
-- 🚀 **Progressive Web App (PWA):** Improving offline support, installability, and mobile responsiveness.  
-- 📱 **React Native Mobile App:** Idea under consideration for a future native mobile experience.  
-- 💬 **Messaging system:** Planned for future implementation to enable user communication.  
-- 📈 **Advanced reporting:** Enhanced analytics and attendance statistics.  
-- 🔒 **Improved security:** Multi-factor authentication and enhanced role management.
+- Draft → Review → Published
+- Visibility control (TV, Web, Internal)
+- Basic version tracking
 
----
+## Technology Stack
 
-## 🚀 Getting Started
+- **Frontend:** React / Next.js
+- **Backend:** Node.js (REST API)
+- **Database:** PostgreSQL or MongoDB
+- **Authentication:** JWT
+- **Storage:** Cloud or local media storage
+- **Deployment:** Cloud hosting
 
-To run MyScholaria on your machine:
+Chosen for reliability, not hype.
 
-```bash
-git clone https://github.com/heri1223samuel/MyScholaria.git
-cd MyScholaria
-npm install
-npm run dev
+## Project Structure
