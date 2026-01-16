@@ -5,5 +5,10 @@
   "confirmedPassword": "Confirmer votre mot de passe ",
   "Email or ID": "Email ou N° Matricule",
   "Sign Up": "S'inscrire",
-  "Sign In": "Se connecter"
+  "Sign In": "Se connecter",
+  "Home": "Acceuil",
+  "actu": "Actualité",
+  "emisssion": "Emission",
+  "live": "Le Direct",
+  "emission": "Emission"
 }

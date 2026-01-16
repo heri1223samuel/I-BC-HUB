@@ -1,0 +1,23 @@
+.search_container {
+  position: relative;
+  /* border: 2px solid red; */
+}
+
+.search {
+  padding-right: 13px;
+  padding-left: 10px;
+  border-radius: 20px;
+  border: 1px solid black;
+}
+.space-between {
+  justify-content: space-around;
+}
+
+.search_icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 13px;
+  height: 20px;
+  width: 20px;
+}

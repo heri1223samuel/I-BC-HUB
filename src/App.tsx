@@ -1,8 +1,9 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import { NotFound } from "./pages/NotFound";
-import { Signin } from "./pages/SignIn";
 import { ThemeContextProvider } from "./contexts/ThemeContext";
 import "./i18n";
+import { Home } from "./pages/Home";
+import { NotFound } from "./pages/NotFound";
+import { Signin } from "./pages/SignIn";
 import { ScrollToTop } from "./tools/ScrollToTop";
 
 export default function App() {
@@ -16,6 +17,7 @@ export default function App() {
           <main className="flex-1">
             <Routes>
               <Route path="*" element={<NotFound />} />
+              <Route path="/home" element={<Home />} />
               <Route path="/" element={<Signin />} />
             </Routes>
           </main>

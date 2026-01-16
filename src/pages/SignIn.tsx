@@ -1,17 +1,16 @@
 import { Button, Container, Paper, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-// import { useThemeContext } from "../../contexts/ThemeContext";
+import { useNavigate } from "react-router-dom";
 import { useThemeContext } from "../contexts/ThemeContext";
 
 export function Signin() {
   const { media, isDesktop, isTablet, isMobile, t } = useThemeContext();
   const [section, setSection] = useState<"signin" | "signup">("signup");
-
+  const navigate = useNavigate();
   const formSignIn = ["Email or ID", "password"];
   const formSignUp = ["Email", "ID Number", "password", "confirmedPassword"];
   useEffect(() => {
     document.title = "Sign In and Sign Up";
-    //     section === "signin" ? (document.title = "Sign In") : "Sign Up";
   }, [section]);
   return (
     <div
@@ -474,6 +473,9 @@ export function Signin() {
                     background: `linear-gradient(to right , #A82A38, #291632 )`,
                     color: "white",
                     fontWeight: "bold",
+                  }}
+                  onClick={() => {
+                    navigate("/home");
                   }}
                 >
                   Se Connecter

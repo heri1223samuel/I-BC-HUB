@@ -1,6 +1,8 @@
+import user from "../assets/user.avif";
 import logo from "../logo.png";
 
 const sharedMedia = {
+  user,
   logo,
 };
 const darkMedia = {};
