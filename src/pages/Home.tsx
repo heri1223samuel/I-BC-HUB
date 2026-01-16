@@ -1,185 +1,249 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import {
   Bell,
-  // Box,
   Calendar,
   CircleUserRound,
   House,
   LogOut,
   Newspaper,
+  PanelLeftOpen,
+  PanelRightOpen,
   Radio,
   Search,
   TvMinimalPlay,
 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useThemeContext } from "../contexts/ThemeContext";
-import "../style/Home.css";
 
 export function Home() {
-  type NavItems = {
+  type NavItem = {
     label: string;
     path: string;
     icon: React.ElementType;
-    special?: boolean;
   };
+
+  // const [openLeftPannel, setOpenLeftPannel] = useState(setPannel);
+  const [openLeftPannel, setOpenLeftPannel] = useState<boolean>(() => {
+    const saved = localStorage.getItem("isMenuOpen");
+    return saved === "true";
+  });
+
+  // const to
+
+  const { t, media } = useThemeContext();
 
   useEffect(() => {
     document.title = "User Profile";
-  });
+  }, []);
 
-  const { t } = useThemeContext();
-  const NavItems: NavItems[] = [
+  const navItems: NavItem[] = [
     { path: "/profile", label: t("Profile"), icon: CircleUserRound },
     { path: "/home", label: t("Home"), icon: House },
     { path: "/news", label: t("actu"), icon: Newspaper },
-    { path: "/emission", label: t("emission"), icon: TvMinimalPlay },
     { path: "/live", label: t("live"), icon: Radio },
+    { path: "/emission", label: t("Emission"), icon: TvMinimalPlay },
     { path: "/program", label: t("Programme"), icon: Calendar },
   ];
 
-  const { media } = useThemeContext();
-
-  const renderNavigation = (navigation: NavItems, onClick?: () => void) => {
-    const Icon = navigation.icon;
-
-    return (
-      <Link
-        to={navigation.path}
-        className="flex align-center"
-        style={{ gap: "3px", margin: "10px 0", fontSize: "19px" }}
-        onClick={onClick}
-      >
-        <Icon style={{ height: "25px", width: "25px" }} className="w-4 h-4" />
-        {navigation.label}
-      </Link>
-    );
-  };
-
   return (
     <div
-      style={{
-        display: "flex",
-
-        background: "#df2e43",
-      }}
-      className="max-w-7xl mx-auto  "
+      className="max-w-7xl mx-auto"
+      style={{ display: "flex", height: "100vh", background: "#df2e43" }}
     >
-      {" "}
+      {/* LEFT PANEL */}
       <div
-        className="flex drt-column align-center"
-        style={{ background: "#df2e43" }}
+        style={{
+          // color: "white !important",
+          width: openLeftPannel ? "260px" : "90px",
+          transition: "width 1s ease-in-out",
+          background: "#df2e43",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
       >
+        {/* PROFILE */}
+        <Box
+          sx={{
+            width: openLeftPannel ? 110 : 60,
+            height: openLeftPannel ? 110 : 60,
+            borderRadius: "50%",
+            overflow: "hidden",
+            marginTop: 2,
+            transition: "all 1s ease-in-out",
+          }}
+        >
+          <img
+            src={media.user}
+            alt="user"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        </Box>
+
+        <Typography
+          sx={{
+            fontSize: openLeftPannel ? 28 : 16,
+            transition: "all 1s ease-in-out",
+            color: "#ffffff",
+            marginTop: 1,
+          }}
+        >
+          John Doe
+        </Typography>
+
+        <Typography
+          sx={{
+            opacity: openLeftPannel ? 1 : 0,
+            transform: openLeftPannel ? "translateY(0)" : "translateY(-10px)",
+            transition: "all 1s ease-in-out",
+            color: "#ffffff",
+          }}
+        >
+          Journaliste et chroniqueur
+        </Typography>
+
+        {/* NAV */}
         <div
           className="flex drt-column align-center"
-          style={{ padding: "0 15px" }}
+          style={{
+            marginTop: 30,
+            width: "100%",
+            fontSize: "19px",
+          }}
         >
-          <Box
-            style={{
-              height: "110px",
-              width: "110px",
-              borderRadius: "50%",
-              overflow: "hidden",
-              margin: "15px 0",
-            }}
-          >
-            <img
-              className="user-photo"
-              src={media.user}
-              alt="Un journaliste avec une appareil photo numériques dans la main"
-            />
-          </Box>
-          <Typography
-            className="user-name"
-            style={{
-              fontSize: "28px",
-              fontFamily: "arial",
-              fontWeight: "lighter",
-            }}
-          >
-            Jhon Doe
-          </Typography>
-          <Typography variant="subtitle1" className="color-black">
-            Journaliste et chronicheur
-          </Typography>
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  padding: "10px 20px",
+                  color: "#f5f5f5",
+                  textDecoration: "none",
+                }}
+              >
+                <Icon size={22} />
+                <span
+                  style={{
+                    display: openLeftPannel ? "inherit" : "none",
+                    // transition: "display 1s ease-in-out",
+
+                    // opacity: openLeftPannel ? 1 : 0,
+                    transition: "all 1s ease-in-out",
+                  }}
+                >
+                  {item.label}
+                </span>
+              </Link>
+            );
+          })}
         </div>
 
-        <div
-          style={{ marginTop: "20px", marginBottom: "60px" }}
-          className="color-black no-drag flex drt-column align-center"
-        >
-          {NavItems.map((item) => renderNavigation(item))}
-        </div>
-
+        {/* LOGOUT */}
         <Link
           to="/"
-          className="flex no-drag color-black"
-          style={{ marginBottom: "60px", gap: "5px" }}
+          style={{
+            marginTop: "auto",
+            marginBottom: 20,
+            display: "flex",
+            gap: 10,
+            color: "#ffffff",
+            fontSize: "19px",
+            textDecoration: "none",
+          }}
         >
           <LogOut />
-          <Typography>Log Out</Typography>
+          {openLeftPannel && <span>Log Out</span>}
         </Link>
       </div>
+
+      {/* RIGHT CONTENT */}
       <div
         style={{
           flex: 1,
-          borderTopLeftRadius: "30px",
-          borderBottomLeftRadius: "30px",
           background: "#C9E1ED",
-          overflow: "hidden",
+          borderTopLeftRadius: 30,
+          borderBottomLeftRadius: 30,
+          transition: "all 1s ease-in-out",
         }}
       >
-        {/* Welocome Greating and search bar */}
-        <Box
-          className="flex space-between"
-          sx={{
-            width: "98%",
-            borderRadius: "20px",
-            margin: "0 auto",
-            marginTop: "15px",
+        {/* TOP BAR */}
+        <div
+          style={{
+            display: "flex",
             alignItems: "center",
-            // border: "2px solid red",
-            background: "whitesmoke",
-            padding: "20px 20px",
+            padding: 15,
+            gap: 10,
           }}
         >
-          <Typography sx={{ fontSize: "25px" }}>Welcome Jhon Doe</Typography>
+          <Button
+            sx={{ color: "inherit" }}
+            onClick={() => setOpenLeftPannel((p) => !p)}
+          >
+            {openLeftPannel ? (
+              <PanelRightOpen size={40} />
+            ) : (
+              <PanelLeftOpen size={40} />
+            )}
+          </Button>
 
-          <div className="flex" style={{ gap: "20px" }}>
-            <div className="search_container">
-              <input className="search" type="text" placeholder="Search" />
-              <Search className="search_icon" />
+          <Box
+            sx={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              background: "whitesmoke",
+              padding: 2,
+              borderRadius: 3,
+            }}
+          >
+            <Typography fontSize={24}>Welcome John Doe</Typography>
+
+            <div style={{ display: "flex", gap: 20 }}>
+              <div style={{ position: "relative" }}>
+                <input
+                  placeholder="Search"
+                  style={{
+                    padding: "8px 30px 8px 10px",
+                    borderRadius: 20,
+                    border: "1px solid black",
+                  }}
+                />
+                <Search
+                  size={18}
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    cursor: "pointer",
+                    right: "12px",
+                    transform: "translateY(-50%)",
+                  }}
+                />
+              </div>
+
+              <div style={{ position: "relative", alignContent: "center" }}>
+                <Bell />
+                <span
+                  style={{
+                    position: "absolute",
+                    top: 8,
+                    right: 2,
+                    width: 10,
+                    height: 10,
+                    background: "red",
+                    borderRadius: "50%",
+                  }}
+                />
+              </div>
             </div>
-            <div className="flex align-center" style={{ position: "relative" }}>
-              <Bell style={{ height: "23px", width: "24px" }} />
-              <div
-                style={{
-                  top: "-2px",
-                  right: "3px",
-                  position: "absolute",
-                  background: "red",
-                  height: "10px",
-                  width: "10px",
-                  borderRadius: "50%",
-                }}
-              ></div>
-            </div>
-          </div>
-        </Box>
-        {/* Over View   */}
-        <div></div>
-        {/* Dashboard  */}
-        <div>
-          {/* CHart  */}
-          <div>
-            <div></div>
-            <div></div>
-          </div>
-          {/* Graph  */}
-          <div></div>
+          </Box>
         </div>
-        {/* Top article  */}
-        <div></div>
       </div>
     </div>
   );
