@@ -1,6 +1,7 @@
 import { Button, Container, Paper, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useThemeContext } from "../../contexts/ThemeContext";
+// import { useThemeContext } from "../../contexts/ThemeContext";
+import { useThemeContext } from "../contexts/ThemeContext";
 
 export function Signin() {
   const { media, isDesktop, isTablet, isMobile, t } = useThemeContext();
@@ -13,7 +14,15 @@ export function Signin() {
     //     section === "signin" ? (document.title = "Sign In") : "Sign Up";
   }, [section]);
   return (
-    <>
+    <div
+      style={{
+        ...(isDesktop
+          ? { marginTop: "20px" }
+          : isTablet
+          ? { marginTop: "20px" }
+          : {}),
+      }}
+    >
       {isMobile && (
         <div
           style={{
@@ -242,7 +251,7 @@ export function Signin() {
       {(isDesktop || isTablet) && (
         <Container
           sx={{
-            // padding: "50px 0",
+            padding: "20px 0",
             display: "flex",
             alignItems: "center",
             borderRadius: "40px",
@@ -474,6 +483,6 @@ export function Signin() {
           </Paper>
         </Container>
       )}
-    </>
+    </div>
   );
 }

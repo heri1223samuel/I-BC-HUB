@@ -1,7 +1,7 @@
 import { Button, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useThemeContext } from "../../contexts/ThemeContext";
+import { useThemeContext } from "../contexts/ThemeContext";
 
 export function NotFound() {
   useEffect(() => {

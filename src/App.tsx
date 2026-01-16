@@ -1,6 +1,6 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import { NotFound } from "./components/pages/NotFound";
-import { Signin } from "./components/pages/SignIn";
+import { NotFound } from "./pages/NotFound";
+import { Signin } from "./pages/SignIn";
 import { ThemeContextProvider } from "./contexts/ThemeContext";
 import "./i18n";
 import { ScrollToTop } from "./tools/ScrollToTop";
