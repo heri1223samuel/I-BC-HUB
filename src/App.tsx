@@ -1,15 +1,28 @@
-// import { SingIn } from "./pages/SingIn.tsx";
-import { ThemeContextProvider } from "./hooks/themeContext";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { NotFound } from "./components/pages/NotFound";
+import { Signin } from "./components/pages/SignIn";
+import { ThemeContextProvider } from "./contexts/ThemeContext";
 import "./i18n";
-import { Signin } from "./pages/SingIn";
+import { ScrollToTop } from "./tools/ScrollToTop";
 
 export default function App() {
   return (
-    <>
-      <ThemeContextProvider>
-        {/* <p>cOUCOU</p> */}
-        <Signin />
-      </ThemeContextProvider>
-    </>
+    // <LanguageProvider>
+    <ThemeContextProvider>
+      <Router>
+        <div className="min-h-screen flex flex-col bg-gray-50">
+          {/* <Navigation /> */}
+          <ScrollToTop />
+          <main className="flex-1">
+            <Routes>
+              <Route path="*" element={<NotFound />} />
+              <Route path="/" element={<Signin />} />
+            </Routes>
+          </main>
+          {/* <Footer /> */}
+        </div>
+      </Router>
+    </ThemeContextProvider>
+    // </LanguageProvider>
   );
 }

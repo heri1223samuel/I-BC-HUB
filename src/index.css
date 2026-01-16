@@ -6,6 +6,15 @@
   color: red;
 }
 
+.no-drag {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+html {
+  background-color: #000;
+}
+
 img {
   user-select: none;
   -webkit-user-drag: none;
@@ -116,7 +125,6 @@ img {
     --spacing: 0.25rem;
     --container-2xl: 42rem;
     --container-3xl: 48rem;
-    --mx-auto: ww;
     --container-7xl: 80rem;
     --text-xs: 0.75rem;
     --text-xs--line-height: calc(1 / 0.75);

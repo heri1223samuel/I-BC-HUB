@@ -19,10 +19,10 @@ export const getTheme = (mode: "light" | "dark") => {
       },
       background: {
         default: mode === "light" ? "#F9FAFB" : "#111827",
-        paper: mode === "light" ? "#FFFFFF" : "#1F2937",
+        paper: mode === "light" ? "#FFFFFF" : "#ffffff",
       },
       text: {
-        primary: mode === "light" ? "#111827" : "#F9FAFB",
+        primary: mode === "light" ? "#111827" : "#000000",
         secondary: mode === "light" ? "#6B7280" : "#9CA3AF",
       },
       error: {

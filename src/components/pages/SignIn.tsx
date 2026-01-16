@@ -1,53 +1,59 @@
 import { Button, Container, Paper, TextField, Typography } from "@mui/material";
-import { useState } from "react";
-import { useThemeContext } from "../hooks/themeContext";
+import { useEffect, useState } from "react";
+import { useThemeContext } from "../../contexts/ThemeContext";
 
 export function Signin() {
-  const { media, isDesktop, isMobile, t } = useThemeContext();
+  const { media, isDesktop, isTablet, isMobile, t } = useThemeContext();
   const [section, setSection] = useState<"signin" | "signup">("signup");
 
-  const formSignIn = ["Email or ID ", "password"];
+  const formSignIn = ["Email or ID", "password"];
   const formSignUp = ["Email", "ID Number", "password", "confirmedPassword"];
+  useEffect(() => {
+    document.title = "Sign In and Sign Up";
+    //     section === "signin" ? (document.title = "Sign In") : "Sign Up";
+  }, [section]);
   return (
-    <div>
-      <div
-        style={{
-          background: `linear-gradient(to right , #A82A38, #291632 )`,
-        }}
-      >
+    <>
+      {isMobile && (
         <div
           style={{
-            padding: "30px 0 150px",
-            justifyContent: "center",
-            gap: "5px",
+            background: `linear-gradient(to right , #A82A38, #291632 )`,
           }}
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex align-center"
         >
-          <img
-            src={media.logo}
+          <div
             style={{
-              ...(isDesktop
-                ? { height: "90px" }
-                : isMobile
-                ? { height: "90px" }
-                : {}),
+              padding: "30px 0 150px",
+              justifyContent: "center",
+              gap: "5px",
             }}
-            alt=""
-          />
-          <Typography sx={{ fontSize: "35px", color: "white" }}>
-            Welcome on
-            {isMobile ? (
-              <>
-                {" "}
-                <br />{" "}
-              </>
-            ) : (
-              <></>
-            )}{" "}
-            I-BC HUB
-          </Typography>
+            className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex align-center"
+          >
+            <img
+              src={media.logo}
+              style={{
+                ...(isDesktop
+                  ? { height: "90px" }
+                  : isMobile
+                  ? { height: "90px" }
+                  : { height: "90px" }),
+              }}
+              alt=""
+            />
+            <Typography sx={{ fontSize: "35px", color: "white" }}>
+              Welcome on
+              {isMobile ? (
+                <>
+                  {" "}
+                  <br />{" "}
+                </>
+              ) : (
+                <></>
+              )}{" "}
+              I-BC HUB
+            </Typography>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* <Container> */}
       {isMobile && (
@@ -233,23 +239,71 @@ export function Signin() {
         </Paper>
       )}
 
-      {isDesktop && (
-        <Container>
+      {(isDesktop || isTablet) && (
+        <Container
+          sx={{
+            // padding: "50px 0",
+            display: "flex",
+            alignItems: "center",
+            borderRadius: "40px",
+            background: `linear-gradient(to right , #A82A38, #291632 )`,
+          }}
+        >
+          {/* <Box sx={{ width: "40%" }}> */}
+          <div
+            style={{
+              width: "40%",
+              height: "100%",
+              // background: `linear-gradient(to right , #A82A38, #291632 )`,
+            }}
+          >
+            <div
+              style={{
+                padding: "30px 0 150px",
+                justifyContent: "center",
+                gap: "5px",
+                textAlign: "center",
+                alignContent: "center",
+              }}
+              // className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex align-center"
+            >
+              <img
+                src={media.logo}
+                style={{
+                  ...(isDesktop
+                    ? { margin: "0 auto", height: "250px" }
+                    : isMobile
+                    ? { height: "90px" }
+                    : { height: "250px" }),
+                }}
+                alt=""
+              />
+              <Typography sx={{ fontSize: "45px", color: "white" }}>
+                Welcome on
+                <br />
+                I-BC Hub
+              </Typography>
+            </div>
+          </div>
+          {/* </Box> */}
+
           <Paper
             // className="max-w-7xl mx-auto px-4 sm:px-4 lg:px-8"
             sx={{
+              width: "60%",
               position: "relative",
-              top: "-120px",
+              // top: "-120px",
               display: "flex",
+              // padding: "30px 0",
 
               flexDirection: "column",
-              borderTopLeftRadius: "130px",
+              borderRadius: "130px",
               // borderTopRightRadius: "90px",
               alignItems: "center",
               // borderTopRightRadius: "30%",
               bgColor: "pink",
-              height: "auto",
-              padding: "20px 0",
+              height: "100%",
+              padding: "60px 0",
               // paddingBottom: "90px",
               ...(section === "signup"
                 ? {
@@ -257,8 +311,8 @@ export function Signin() {
                     borderBottomRightRadius: "90px",
                   }
                 : {
-                    borderBottomLeftRadius: "50px",
-                    borderBottomRightRadius: "50px",
+                    borderBottomLeftRadius: "90px",
+                    borderBottomRightRadius: "90px",
                   }),
             }}
             elevation={12}
@@ -275,7 +329,7 @@ export function Signin() {
                 borderRadius: "20px",
                 fontSize: "20px",
                 top: "0px",
-                right: "10px",
+                right: "110px",
               }}
             >
               {" "}
@@ -420,6 +474,6 @@ export function Signin() {
           </Paper>
         </Container>
       )}
-    </div>
+    </>
   );
 }
