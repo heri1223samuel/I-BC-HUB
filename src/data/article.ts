@@ -83,14 +83,14 @@ const allNews: Article[] = [
 ];
 
 function getThreeArtcicleRandom(articles: Article[]): Article[] {
-  if (articles.length <= 3) {
+  if (articles.length <= 4) {
     return articles;
   }
 
   const result: Article[] = [];
   const indices = new Set<number>();
 
-  while (result.length < 3) {
+  while (result.length < 4) {
     const randomIndex = Math.floor(Math.random() * articles.length);
     if (!indices.has(randomIndex)) {
       indices.add(randomIndex);

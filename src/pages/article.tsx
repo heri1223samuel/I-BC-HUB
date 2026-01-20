@@ -1,4 +1,11 @@
-import { Box, Button, Paper, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  MenuItem,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import {
   ArrowRight,
   Bell,
@@ -6,14 +13,23 @@ import {
   PanelRightOpen,
   Search,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { useThemeContext } from "../contexts/ThemeContext";
 import { randomArticles } from "../data/article";
+import { categories, categoryColor } from "../data/newsCategory";
 import "../style/Home.css";
 
 export function Article() {
-  const { media, openNavigation, toggleNavigation } = useThemeContext();
+  useEffect(() => {
+    document.title = "Articles et Actualités";
+  });
+
+  const [selectedCategory, setSelectedCategory] = useState<string>("Culture");
+  const { media, isDesktop, openNavigation, toggleNavigation } =
+    useThemeContext();
+
   return (
     <div
       style={{
@@ -127,86 +143,90 @@ export function Article() {
         </Typography>
 
         {/* GRID */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, 300px)",
-            gap: "15px",
-            justifyContent: "center",
-            margin: "0 auto",
-            width: "100%",
-          }}
-        >
-          {randomArticles.map((article) => (
-            <Paper
-              key={article.id}
-              elevation={7}
-              sx={{
-                width: "300px",
-                height: "330px",
-                borderRadius: "10px",
-                overflow: "hidden",
-                backgroundColor: "whitesmoke",
-                "&:hover": {
-                  boxShadow: "9px 7px 7px rgba(0, 0, 0, 0.3)",
-                },
-              }}
-            >
-              {/* Image */}
-              <Box
+        {isDesktop && (
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, 230px)",
+              gap: "25px",
+              // justifyContent: "center",
+              // border: "2px solid red",
+              // margin: "0 auto",
+              // width: "100%",
+            }}
+          >
+            {randomArticles.map((article) => (
+              <Paper
+                key={article.id}
+                elevation={7}
                 sx={{
-                  height: "190px",
-                  overflow: "hidden",
-                  "& img": {
-                    transition: "transform 0.3s",
-                  },
-                  "&:hover img": {
-                    transform: "scale(1.1)",
-                  },
-                }}
-              >
-                <ImageWithFallback
-                  src={media[article.image]}
-                  alt={article.title}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-              </Box>
+                  width: "100%",
 
-              {/* Title */}
-              <Typography
-                sx={{
-                  fontSize: "17px",
-                  margin: "9px 0",
-                  textAlign: "center",
+                  height: "280px",
+                  borderRadius: "10px",
+                  overflow: "hidden",
+                  backgroundColor: "whitesmoke",
                   "&:hover": {
-                    color: "rgb(255, 0, 0)",
+                    boxShadow: "9px 7px 7px rgba(0, 0, 0, 0.3)",
                   },
                 }}
               >
-                {article.title}
-              </Typography>
+                {/* Image */}
+                <Box
+                  sx={{
+                    height: "140px",
+                    overflow: "hidden",
+                    "& img": {
+                      transition: "transform 0.3s",
+                    },
+                    "&:hover img": {
+                      transform: "scale(1.1)",
+                    },
+                  }}
+                >
+                  <ImageWithFallback
+                    src={media[article.image]}
+                    alt={article.title}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                </Box>
 
-              {/* Description */}
-              <Typography
-                sx={{
-                  padding: "0 10px",
-                  textAlign: "center",
-                  color: "gray",
-                  display: "-webkit-box",
-                  WebkitLineClamp: 2,
-                  WebkitBoxOrient: "vertical",
-                  overflow: "hidden",
-                }}
-              >
-                {article.description}
-              </Typography>
-            </Paper>
-          ))}
-        </div>
+                {/* Title */}
+                <Typography
+                  sx={{
+                    fontSize: "17px",
+                    margin: "9px 0",
+                    textAlign: "center",
+                    "&:hover": {
+                      color: "rgb(255, 0, 0)",
+                    },
+                  }}
+                >
+                  {article.title}
+                </Typography>
+
+                {/* Description */}
+                <Typography
+                  sx={{
+                    padding: "0 10px",
+                    textAlign: "center",
+                    color: "gray",
+                    display: "-webkit-box",
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden",
+                  }}
+                >
+                  {article.description}
+                </Typography>
+              </Paper>
+            ))}
+          </div>
+        )}
 
         {/* LINK */}
         <Link
@@ -252,6 +272,69 @@ export function Article() {
             margin: "20px 0",
           }}
         />
+        <div
+          className="flex "
+          style={{
+            width: "90%",
+            gap: "9px",
+            justifyContent: "start",
+            marginBottom: "20px",
+          }}
+        >
+          <Typography
+            sx={{
+              textAlign: "left",
+              fontSize: "22px",
+              fontWeight: "semi-bold",
+              // width: "90%",
+            }}
+          >
+            Catégorie
+          </Typography>
+
+          <TextField
+            select
+            variant="standard"
+            // defaultValue={categories[4]}
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            sx={{
+              borderRadius: "15px",
+              color: "white",
+
+              padding: "0 10px",
+              background: categoryColor[selectedCategory],
+
+              "& .MuiInputBase-input": {
+                color: "#fff",
+              },
+
+              // icône dropdown
+              "& .MuiSelect-icon": {
+                color: "#fff",
+              },
+              "&:before": {
+                borderBottomColor: "#fff",
+              },
+              "&:after": {
+                borderBottomColor: "#fff",
+              },
+              "&:hover:not(.Mui-disabled):before": {
+                borderBottomColor: "#fff",
+              },
+            }}
+
+            // fullWidth
+          >
+            {[...categories]
+              .sort((a, b) => a.localeCompare(b))
+              .map((option) => (
+                <MenuItem key={option} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
+          </TextField>
+        </div>
 
         <Typography
           sx={{
@@ -297,6 +380,7 @@ export function Article() {
             textAlign: "left",
             fontSize: "22px",
             fontWeight: "semi-bold",
+            mt: "20px",
             width: "90%",
           }}
         >
@@ -337,7 +421,7 @@ export function Article() {
           sx={{
             marginTop: "40px",
             fontWeight: "semi-bold",
-            background: "rgb(160, 5, 0)",
+            background: "#df2e43",
           }}
           variant="contained"
         >

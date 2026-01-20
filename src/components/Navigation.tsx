@@ -36,12 +36,13 @@ export function Navigation({ openLeftPannel }: { openLeftPannel: boolean }) {
     <div
       style={{
         // color: "white !important",
-        width: openLeftPannel ? "260px" : "90px",
+        width: openLeftPannel ? "240px" : "90px",
         transition: "width 1s ease-in-out",
         background: "#df2e43",
         display: "flex",
         height: "100vh",
         flexDirection: "column",
+        // overflowY: "scroll",
         alignItems: "center",
       }}
     >
@@ -117,13 +118,8 @@ export function Navigation({ openLeftPannel }: { openLeftPannel: boolean }) {
                       color: "black",
                       borderTopLeftRadius: "20px",
                       borderBottomLeftRadius: "20px",
-                      // paddingRight: "50px",
-                      // position: "absolute",
                       width: "75%",
                       flex: 1,
-
-                      // alignContent: "right",
-                      // justifyContent: "center",
                       marginLeft: "25%",
                       // marginBottom: "200px",
                       right: "0px",
@@ -163,7 +159,7 @@ export function Navigation({ openLeftPannel }: { openLeftPannel: boolean }) {
 
       {/* LOGOUT */}
       <Link
-        to="/"
+        to="/signin"
         style={{
           marginTop: "auto",
           marginBottom: 20,

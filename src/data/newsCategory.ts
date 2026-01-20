@@ -19,7 +19,7 @@ export const CATEGORY_GROUPS: Record<
   },
 
   "Environnement & urgences": {
-    color: "#388E3C",
+    color: "#ff0000",
     categories: [
       "Météo",
       "Catastrophes naturelles",
@@ -114,3 +114,19 @@ export const CATEGORY_GROUPS: Record<
     ],
   },
 };
+
+export const categories: string[] = Object.values(CATEGORY_GROUPS).flatMap(
+  (group) => group.categories,
+);
+
+export const categoryColor: Record<string, string> = Object.values(
+  CATEGORY_GROUPS,
+).reduce(
+  (categories, each) => {
+    for (const item of each.categories) {
+      categories[item] = each.color;
+    }
+    return categories;
+  },
+  {} as Record<string, string>,
+);

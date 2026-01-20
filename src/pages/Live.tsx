@@ -3,11 +3,11 @@ import { Bell, PanelLeftOpen, PanelRightOpen, Search } from "lucide-react";
 import { useEffect } from "react";
 import { useThemeContext } from "../contexts/ThemeContext";
 
-export function Home() {
+export function Live() {
   const { openNavigation, toggleNavigation } = useThemeContext();
 
   useEffect(() => {
-    document.title = "Acceuil";
+    document.title = "Le Direct";
   }, []);
 
   return (
@@ -59,7 +59,7 @@ export function Home() {
             borderRadius: 3,
           }}
         >
-          <Typography fontSize={24}>Acceuil</Typography>
+          <Typography fontSize={24}>Le Direct</Typography>
 
           <div style={{ display: "flex", gap: 20 }}>
             <div style={{ position: "relative" }}>

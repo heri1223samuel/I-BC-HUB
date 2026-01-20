@@ -2,41 +2,24 @@ import { Box, Button, Typography } from "@mui/material";
 import { Bell, PanelLeftOpen, PanelRightOpen, Search } from "lucide-react";
 import { useEffect } from "react";
 import { useThemeContext } from "../contexts/ThemeContext";
+import "../style/Home.css";
 
-export function Home() {
+export function Programm() {
   const { openNavigation, toggleNavigation } = useThemeContext();
-
   useEffect(() => {
-    document.title = "Acceuil";
-  }, []);
+    document.title = "Programmes";
+  });
 
   return (
-    <div
-      style={{
-        borderTopLeftRadius: "30px",
-        borderBottomLeftRadius: "30px",
-        overflow: "hidden",
-        height: "100vh",
-        display: "flex",
-        // maxWidth: "1280px",
-        flexDirection: "column",
-        alignItems: "center",
-        flex: 1,
-        margin: "0 auto",
-        overflowY: "scroll",
-        background: "#C9E1ED",
-        transition: "all 1s ease-in-out",
-      }}
-    >
-      {/* RIGHT CONTENT */}
-
-      {/* TOP BAR */}
+    <div className="Container">
       <div
         style={{
-          width: "98%",
+          // width: "1280px",
           display: "flex",
           alignItems: "center",
+          margin: "0 auto",
           padding: 15,
+          width: "95%",
           gap: 10,
         }}
       >
@@ -59,7 +42,7 @@ export function Home() {
             borderRadius: 3,
           }}
         >
-          <Typography fontSize={24}>Acceuil</Typography>
+          <Typography fontSize={24}>Programme</Typography>
 
           <div style={{ display: "flex", gap: 20 }}>
             <div style={{ position: "relative" }}>
