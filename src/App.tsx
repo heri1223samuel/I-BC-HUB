@@ -1,11 +1,12 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import Content from "./Content";
 import { ThemeContextProvider } from "./contexts/ThemeContext";
 import "./i18n";
+import { Article } from "./pages/article";
 import { Home } from "./pages/Home";
 import { NotFound } from "./pages/NotFound";
 import { Signin } from "./pages/SignIn";
 import { ScrollToTop } from "./tools/ScrollToTop";
-
 export default function App() {
   return (
     // <LanguageProvider>
@@ -16,9 +17,13 @@ export default function App() {
           <ScrollToTop />
           <main className="flex-1">
             <Routes>
+              {" "}
+              <Route element={<Content />}>
+                <Route path="/articles" element={<Article />} />
+                <Route path="/" element={<Home />} />
+              </Route>
               <Route path="*" element={<NotFound />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/" element={<Signin />} />
+              <Route path="/Signin" element={<Signin />} />
             </Routes>
           </main>
           {/* <Footer /> */}
