@@ -1,167 +1,20 @@
 import { Box, Button, Typography } from "@mui/material";
-import {
-  Bell,
-  Calendar,
-  CircleUserRound,
-  House,
-  LogOut,
-  Newspaper,
-  PanelLeftOpen,
-  PanelRightOpen,
-  Radio,
-  Search,
-  TvMinimalPlay,
-} from "lucide-react";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Bell, PanelLeftOpen, PanelRightOpen, Search } from "lucide-react";
+import { useEffect } from "react";
 import { useThemeContext } from "../contexts/ThemeContext";
 
 export function Home() {
-  type NavItem = {
-    label: string;
-    path: string;
-    icon: React.ElementType;
-  };
-
-  // const [openLeftPannel, setOpenLeftPannel] = useState(setPannel);
-  const [openLeftPannel, setOpenLeftPannel] = useState<boolean>(() => {
-    const saved = localStorage.getItem("isMenuOpen");
-    return saved === "true";
-  });
-
-  // const to
-
-  const { t, media } = useThemeContext();
+  const { openNavigation, toggleNavigation } = useThemeContext();
 
   useEffect(() => {
     document.title = "User Profile";
   }, []);
 
-  const navItems: NavItem[] = [
-    { path: "/profile", label: t("Profile"), icon: CircleUserRound },
-    { path: "/home", label: t("Home"), icon: House },
-    { path: "/news", label: t("actu"), icon: Newspaper },
-    { path: "/live", label: t("live"), icon: Radio },
-    { path: "/emission", label: t("Emission"), icon: TvMinimalPlay },
-    { path: "/program", label: t("Programme"), icon: Calendar },
-  ];
-
   return (
     <div
       className="max-w-7xl mx-auto"
-      style={{ display: "flex", height: "100vh", background: "#df2e43" }}
+      style={{ display: "flex", height: "100vh" }}
     >
-      {/* LEFT PANEL */}
-      <div
-        style={{
-          // color: "white !important",
-          width: openLeftPannel ? "260px" : "90px",
-          transition: "width 1s ease-in-out",
-          background: "#df2e43",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        {/* PROFILE */}
-        <Box
-          sx={{
-            width: openLeftPannel ? 110 : 60,
-            height: openLeftPannel ? 110 : 60,
-            borderRadius: "50%",
-            overflow: "hidden",
-            marginTop: 2,
-            transition: "all 1s ease-in-out",
-          }}
-        >
-          <img
-            src={media.user}
-            alt="user"
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
-        </Box>
-
-        <Typography
-          sx={{
-            fontSize: openLeftPannel ? 28 : 16,
-            transition: "all 1s ease-in-out",
-            color: "#ffffff",
-            marginTop: 1,
-          }}
-        >
-          John Doe
-        </Typography>
-
-        <Typography
-          sx={{
-            opacity: openLeftPannel ? 1 : 0,
-            transform: openLeftPannel ? "translateY(0)" : "translateY(-10px)",
-            transition: "all 1s ease-in-out",
-            color: "#ffffff",
-          }}
-        >
-          Journaliste et chroniqueur
-        </Typography>
-
-        {/* NAV */}
-        <div
-          className="flex drt-column align-center"
-          style={{
-            marginTop: 30,
-            width: "100%",
-            fontSize: "19px",
-          }}
-        >
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 10,
-                  padding: "10px 20px",
-                  color: "#f5f5f5",
-                  textDecoration: "none",
-                }}
-              >
-                <Icon size={22} />
-                <span
-                  style={{
-                    display: openLeftPannel ? "inherit" : "none",
-                    // transition: "display 1s ease-in-out",
-
-                    // opacity: openLeftPannel ? 1 : 0,
-                    transition: "all 1s ease-in-out",
-                  }}
-                >
-                  {item.label}
-                </span>
-              </Link>
-            );
-          })}
-        </div>
-
-        {/* LOGOUT */}
-        <Link
-          to="/"
-          style={{
-            marginTop: "auto",
-            marginBottom: 20,
-            display: "flex",
-            gap: 10,
-            color: "#ffffff",
-            fontSize: "19px",
-            textDecoration: "none",
-          }}
-        >
-          <LogOut />
-          {openLeftPannel && <span>Log Out</span>}
-        </Link>
-      </div>
-
       {/* RIGHT CONTENT */}
       <div
         style={{
@@ -181,11 +34,8 @@ export function Home() {
             gap: 10,
           }}
         >
-          <Button
-            sx={{ color: "inherit" }}
-            onClick={() => setOpenLeftPannel((p) => !p)}
-          >
-            {openLeftPannel ? (
+          <Button sx={{ color: "inherit" }} onClick={toggleNavigation}>
+            {openNavigation ? (
               <PanelRightOpen size={40} />
             ) : (
               <PanelLeftOpen size={40} />
