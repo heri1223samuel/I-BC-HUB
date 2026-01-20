@@ -475,7 +475,7 @@ export function Signin() {
                     fontWeight: "bold",
                   }}
                   onClick={() => {
-                    navigate("/home");
+                    navigate("/");
                   }}
                 >
                   Se Connecter
