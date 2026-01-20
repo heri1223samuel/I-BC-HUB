@@ -16,6 +16,8 @@ interface ThemeContextType {
   isDesktop: boolean;
   isTablet: boolean;
   isMobile: boolean;
+  openNavigation: boolean;
+  toggleNavigation: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | null>(null);
@@ -43,6 +45,17 @@ export const ThemeContextProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const theme = useMemo(() => getTheme(currentMode), [currentMode]);
 
+  const [openNavigation, setOpenNavigation] = useState<boolean>(() => {
+    return localStorage.getItem("isNavigationOpen") === "true";
+  });
+
+  const toggleNavigation = () => {
+    setOpenNavigation((prev) => {
+      localStorage.setItem("isNavigationOpen", String(!prev));
+      return !prev;
+    });
+  };
+
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
@@ -60,6 +73,8 @@ export const ThemeContextProvider: React.FC<{ children: React.ReactNode }> = ({
         currentMode,
         media,
         changeMode,
+        openNavigation,
+        toggleNavigation,
       }}
     >
       <ThemeProvider theme={theme}>
