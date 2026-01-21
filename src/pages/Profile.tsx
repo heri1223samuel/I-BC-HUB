@@ -3,6 +3,7 @@ import {
   Button,
   FormControlLabel,
   FormGroup,
+  MenuItem,
   Paper,
   Radio,
   RadioGroup,
@@ -19,7 +20,7 @@ export function Profile() {
   const { openNavigation, toggleNavigation } = useThemeContext();
 
   const [gender, setGender] = useState<string>("Male");
-
+  const [company, setCompany] = useState<string>("I-BC");
   type FormTypes = {
     label: string;
     placeholder?: string;
@@ -29,12 +30,13 @@ export function Profile() {
     options?: string[];
   };
 
-  const company = [
+  const companyOptions = [
     { label: "I-BC", color: "rgba(231, 18, 18, 0.93)" },
     { label: "Dreaming", color: "rgb(128, 0, 139)" },
     { label: "La 7", color: "rgb(0, 38, 73)" },
   ];
 
+  const selectedCompany = companyOptions.find((c) => c.label === company);
   const PersonnalInfo: FormTypes[] = [
     { label: "Nom", value: "lastname" },
     { label: "Prénom", value: "firstname" },
@@ -57,7 +59,7 @@ export function Profile() {
       label: "Entreprise",
       value: "company",
       select: true,
-      options: company.map((item) => item.label),
+      options: companyOptions.map((item) => item.label),
     },
     { label: "Département", value: "department" },
     { label: "Date d'embauche", value: "entryDate" },
@@ -191,6 +193,7 @@ export function Profile() {
               width: "50%",
               margin: "auto",
               padding: "20px 0",
+              gap: "20px",
               borderRadius: "30px",
             }}
           >
@@ -270,11 +273,12 @@ export function Profile() {
             sx={{
               width: "50%",
               padding: "20px 0",
+              gap: "20px",
               borderRadius: "30px",
               // border: "2px solid #8aafff",
             }}
           >
-            <Typography sx={{ fontSize: "25px" }}>
+            <Typography className="mb-c" sx={{ fontSize: "25px" }}>
               Informations profesionneles
             </Typography>
             <div
@@ -283,7 +287,42 @@ export function Profile() {
             >
               {ProfessionalInfo.map((item, index) =>
                 item.select ? (
-                  <></>
+                  <TextField
+                    sx={{
+                      borderRadius: "15px",
+                      color: "white",
+
+                      padding: "0 10px",
+
+                      "& .MuiInputBase-input": {
+                        color: "#ffffff",
+                        background: selectedCompany?.color,
+                      },
+
+                      // icône dropdown
+                      "& .MuiSelect-icon": {
+                        color: "#ffffff",
+                      },
+                      "&:before": {
+                        borderBottomColor: "#fff",
+                      },
+                      "&:after": {
+                        borderBottomColor: "#fff",
+                      },
+                      "&:hover:not(.Mui-disabled):before": {
+                        borderBottomColor: "#fff",
+                      },
+                    }}
+                    select
+                    value={company}
+                    onChange={(e) => setCompany(e.target.value)}
+                  >
+                    {companyOptions.map((option) => (
+                      <MenuItem key={option.label} value={option.label}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
                 ) : (
                   <TextField
                     key={index}
