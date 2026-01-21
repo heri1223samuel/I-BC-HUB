@@ -1,15 +1,73 @@
-import { Box, Button, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControlLabel,
+  FormGroup,
+  Paper,
+  Radio,
+  RadioGroup,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Bell, PanelLeftOpen, PanelRightOpen, Search } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { useThemeContext } from "../contexts/ThemeContext";
+import "../style/Home.css";
 
 export function Profile() {
   const { openNavigation, toggleNavigation } = useThemeContext();
 
+  const [gender, setGender] = useState<string>("Male");
+
+  type FormTypes = {
+    label: string;
+    placeholder?: string;
+    value: string;
+    select?: boolean;
+    check?: boolean;
+    options?: string[];
+  };
+
+  const company = [
+    { label: "I-BC", color: "rgba(231, 18, 18, 0.93)" },
+    { label: "Dreaming", color: "rgb(128, 0, 139)" },
+    { label: "La 7", color: "rgb(0, 38, 73)" },
+  ];
+
+  const PersonnalInfo: FormTypes[] = [
+    { label: "Nom", value: "lastname" },
+    { label: "Prénom", value: "firstname" },
+    {
+      label: "Genre",
+      check: true,
+      value: "gender",
+      options: ["Male", "Female"],
+    },
+    { label: "Date de naissance", value: "birthdate" },
+    { label: "Adresse", value: "adress" },
+    { label: "Numéro téléphone", value: "phoneNumber" },
+    { label: "Email", value: "email" },
+    { label: "Numéro CIN", value: "N_CIN" },
+  ];
+
+  const ProfessionalInfo: FormTypes[] = [
+    { label: "Poste", value: "jobTitle" },
+    {
+      label: "Entreprise",
+      value: "company",
+      select: true,
+      options: company.map((item) => item.label),
+    },
+    { label: "Département", value: "department" },
+    { label: "Date d'embauche", value: "entryDate" },
+    { label: "Matricule", value: "matricule" },
+  ];
+
   useEffect(() => {
     document.title = "User Profile";
   }, []);
-
+  const { media } = useThemeContext();
   return (
     <div
       style={{
@@ -100,6 +158,166 @@ export function Profile() {
           </div>
         </Box>
       </div>
+
+      <Paper
+        className="flex align-center drt-column"
+        sx={{ width: "89%", padding: "20px 0" }}
+      >
+        <Box
+          sx={{
+            height: "130px",
+            width: "130px",
+            borderRadius: "50%",
+            overflow: "hidden",
+          }}
+        >
+          <ImageWithFallback
+            src={media.user}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        </Box>
+        <Box
+          className="flex "
+          sx={{
+            width: "100%",
+            justifyContent: "center",
+            gap: "20px",
+            padding: "0 20px",
+          }}
+        >
+          <Box
+            className="flex drt-column align-center border-color"
+            sx={{
+              width: "50%",
+              margin: "auto",
+              padding: "20px 0",
+              borderRadius: "30px",
+            }}
+          >
+            <Typography sx={{ fontSize: "25px" }}>
+              {" "}
+              Informations peronnelles
+            </Typography>
+            <div
+              className="FormContainer"
+              style={{ justifyContent: "center", width: "100%" }}
+            >
+              {PersonnalInfo.map((item, index) =>
+                item.check ? (
+                  <FormGroup>
+                    <RadioGroup
+                      row
+                      value={gender}
+                      onChange={(e) => setGender(e.target.value)}
+                    >
+                      {item.options?.map((option, index) => (
+                        <FormControlLabel
+                          control={
+                            <Radio
+                              sx={{
+                                "&.Mui-checked": {
+                                  color: "#214ba7",
+                                },
+                              }}
+                            />
+                          }
+                          key={index}
+                          value={option}
+                          label={option}
+                          sx={{
+                            "&.Mui-checked": {
+                              color: "#214ba7",
+                            },
+                          }}
+                        />
+                      ))}
+                    </RadioGroup>
+                  </FormGroup>
+                ) : (
+                  <TextField
+                    key={index}
+                    sx={{
+                      "& .MuiInputLabel-root": {
+                        color: "#214ba7",
+                      },
+                      "& .MuiInputLabel-root.Mui-focused": {
+                        color: "#214ba7",
+                      },
+                      "& .MuiOutlinedInput-root": {
+                        height: "46px", // hauteur totale
+                        borderRadius: "10px", // border radius
+                        "& fieldset": {
+                          borderColor: "#214ba7",
+                        },
+                        "&:hover fieldset": {
+                          borderColor: "#555",
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: "#214ba7",
+                          borderWidth: 2,
+                        },
+                      },
+                      width: "100%",
+                    }}
+                    label={item.label}
+                  />
+                ),
+              )}
+            </div>
+          </Box>
+          <Box
+            className="flex drt-column align-center border-color"
+            sx={{
+              width: "50%",
+              padding: "20px 0",
+              borderRadius: "30px",
+              // border: "2px solid #8aafff",
+            }}
+          >
+            <Typography sx={{ fontSize: "25px" }}>
+              Informations profesionneles
+            </Typography>
+            <div
+              className="FormContainer"
+              style={{ justifyContent: "center", width: "100%" }}
+            >
+              {ProfessionalInfo.map((item, index) =>
+                item.select ? (
+                  <></>
+                ) : (
+                  <TextField
+                    key={index}
+                    sx={{
+                      "& .MuiInputLabel-root": {
+                        color: "#214ba7",
+                      },
+                      "& .MuiInputLabel-root.Mui-focused": {
+                        color: "#214ba7",
+                      },
+                      "& .MuiOutlinedInput-root": {
+                        height: "46px", // hauteur totale
+                        borderRadius: "10px", // border radius
+                        "& fieldset": {
+                          borderColor: "#214ba7",
+                        },
+                        "&:hover fieldset": {
+                          borderColor: "#555",
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: "#214ba7",
+                          borderWidth: 2,
+                        },
+                      },
+                      width: "100%",
+                    }}
+                    label={item.label}
+                  />
+                ),
+              )}
+            </div>
+          </Box>
+        </Box>
+      </Paper>
     </div>
   );
 }
