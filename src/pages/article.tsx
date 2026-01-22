@@ -1,8 +1,17 @@
+import type { SelectChangeEvent } from "@mui/material";
 import {
   Box,
   Button,
+  Checkbox,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  ListItemText,
   MenuItem,
   Paper,
+  Select,
   TextField,
   Typography,
 } from "@mui/material";
@@ -11,7 +20,9 @@ import {
   Bell,
   PanelLeftOpen,
   PanelRightOpen,
+  PlusCircle as PlusCircleIcon,
   Search,
+  X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -25,8 +36,36 @@ export function Article() {
   useEffect(() => {
     document.title = "Articles et Actualités";
   });
+  const [open, setOpen] = useState(false);
+  const prevCategory = localStorage.getItem("category")?.split(",") || [];
+  const [selectedCategory, setSelectedCategory] =
+    useState<string[]>(prevCategory);
+  const [tesmpCategory, setTempCategory] = useState<string[]>([]);
 
-  const [selectedCategory, setSelectedCategory] = useState<string>("Culture");
+  const handleChange = (event: SelectChangeEvent<string[]>) => {
+    const {
+      target: { value },
+    } = event;
+    setTempCategory(typeof value === "string" ? value.split(",") : value);
+  };
+
+  const deleteCategory = (cat: string) => {
+    const newCategory = selectedCategory.filter((item) => item !== cat);
+    setSelectedCategory(newCategory);
+    setTempCategory(newCategory);
+    localStorage.setItem("category", newCategory.join(","));
+  };
+
+  const handleConfirm = () => {
+    setSelectedCategory([...tesmpCategory]);
+    localStorage.setItem("category", tesmpCategory.join(","));
+    setOpen(false);
+  };
+
+  const handleCancel = () => {
+    setTempCategory([...selectedCategory]);
+    setOpen(false);
+  };
   const { media, isDesktop, openNavigation, toggleNavigation } =
     useThemeContext();
 
@@ -147,7 +186,7 @@ export function Article() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, 230px)",
+              gridTemplateColumns: "repeat(auto-fill, 250px)",
               gap: "25px",
               // justifyContent: "center",
               // border: "2px solid red",
@@ -162,7 +201,7 @@ export function Article() {
                 sx={{
                   width: "100%",
 
-                  height: "280px",
+                  height: "300px",
                   borderRadius: "10px",
                   overflow: "hidden",
                   backgroundColor: "whitesmoke",
@@ -273,7 +312,7 @@ export function Article() {
           }}
         />
         <div
-          className="flex "
+          className="flex align-center"
           style={{
             width: "90%",
             gap: "9px",
@@ -284,7 +323,7 @@ export function Article() {
           <Typography
             sx={{
               textAlign: "left",
-              fontSize: "22px",
+              fontSize: "26px",
               fontWeight: "semi-bold",
               // width: "90%",
             }}
@@ -292,48 +331,135 @@ export function Article() {
             Catégorie
           </Typography>
 
-          <TextField
-            select
-            variant="standard"
-            // defaultValue={categories[4]}
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            sx={{
-              borderRadius: "15px",
-              color: "white",
-
-              padding: "0 10px",
-              background: categoryColor[selectedCategory],
-
-              "& .MuiInputBase-input": {
-                color: "#fff",
-              },
-
-              // icône dropdown
-              "& .MuiSelect-icon": {
-                color: "#fff",
-              },
-              "&:before": {
-                borderBottomColor: "#fff",
-              },
-              "&:after": {
-                borderBottomColor: "#fff",
-              },
-              "&:hover:not(.Mui-disabled):before": {
-                borderBottomColor: "#fff",
-              },
+          <PlusCircleIcon
+            style={{ height: "26px", width: "26px" }}
+            onClick={() => {
+              (setOpen(true), setTempCategory([...selectedCategory]));
             }}
-
-            // fullWidth
+          />
+          <Dialog
+            open={open}
+            onClose={() => setOpen(false)}
+            fullWidth
+            maxWidth="sm"
           >
-            {[...categories]
+            <DialogTitle>Choisir les catégories</DialogTitle>
+
+            <DialogContent>
+              <Box display="flex" alignItems="center" gap={2} mt={1}>
+                {/* Icon + */}
+                {/* <PlusCircleIcon size={24} /> */}
+
+                {/* Select multiple */}
+                <FormControl sx={{ flex: 1 }}>
+                  {/* <InputLabel id="category-label">Catégorie</InputLabel> */}
+                  <Select
+                    label="Catégorie"
+                    labelId="category-label"
+                    multiple
+                    value={tesmpCategory}
+                    onChange={handleChange}
+                    renderValue={() => ""}
+                    variant="standard"
+                    sx={{ border: "2px solid #1976d2" }}
+                  >
+                    {categories
+                      .sort((a, b) => a.localeCompare(b))
+                      .map((option) => (
+                        <MenuItem key={option} value={option}>
+                          <Checkbox
+                            sx={{
+                              color: "#888",
+                              borderRadius: "4px",
+                              "&.Mui-checked": {
+                                color: "#001aff",
+                                backgroundColor: "#ffeeee",
+                              },
+                            }}
+                            checked={tesmpCategory.includes(option)}
+                          />
+                          <ListItemText primary={option} />
+                        </MenuItem>
+                      ))}
+                  </Select>
+                </FormControl>
+              </Box>
+
+              {/* Affichage à droite des sélections */}
+              <Box display="flex" flexWrap="wrap" gap={1} mt={2}>
+                {tesmpCategory.map((cat) => (
+                  <Typography
+                    key={cat}
+                    sx={{
+                      background: categoryColor[cat],
+                      color: "#fff",
+                      px: 1,
+                      py: 0.5,
+                      borderRadius: "5px",
+                    }}
+                  >
+                    {cat}
+                  </Typography>
+                ))}
+              </Box>
+            </DialogContent>
+
+            <DialogActions>
+              <Button
+                variant="contained"
+                sx={{ background: "rgba(255, 230, 0, 0.8)", color: "black" }}
+                onClick={() => handleCancel()}
+              >
+                Annuler
+              </Button>
+              <Button
+                sx={{ background: "green" }}
+                variant="contained"
+                onClick={() => {
+                  console.log(tesmpCategory);
+                  handleConfirm();
+                }}
+              >
+                Confirmer
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <div
+            className="flex align-center"
+            style={{ flexWrap: "wrap", gap: "10px" }}
+          >
+            {selectedCategory
               .sort((a, b) => a.localeCompare(b))
-              .map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
+              .map((cat) => (
+                <Box sx={{ position: "relative" }}>
+                  <Typography
+                    key={cat}
+                    sx={{
+                      background: categoryColor[cat],
+                      padding: "5px 9px",
+                      borderRadius: "15px",
+                      color: "white",
+                    }}
+                    variant="body2"
+                  >
+                    {cat}
+                  </Typography>
+                  <X
+                    onClick={() => deleteCategory(cat)}
+                    style={{
+                      display: cat ? "flex" : "none",
+                      color: "white",
+                      background: "red",                      borderRadius: "50%",
+                      position: "absolute",
+                      top: "-10px",
+                      cursor: "pointer",
+                      right: "-10px",
+                    }}
+                    strokeWidth={3}
+                  />
+                </Box>
               ))}
-          </TextField>
+          </div>
         </div>
 
         <Typography
