@@ -210,11 +210,19 @@ export function Profile() {
             </Typography>
             <div
               className="FormContainer"
-              style={{ justifyContent: "center", width: "100%" }}
+              style={{
+                // justifyContent: "center",
+                width: "100%",
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill,minmax(45%, 1fr))",
+                gap: "10px",
+
+                // gridTemplateColumns: "repeat-auto-fill(50%, 1fr)",
+              }}
             >
               {PersonnalInfo.map((item, index) =>
                 item.check ? (
-                  <FormGroup>
+                  <FormGroup key={index} sx={{ width: "100%" }}>
                     <RadioGroup
                       row
                       value={gender}
@@ -290,11 +298,17 @@ export function Profile() {
             </Typography>
             <div
               className="FormContainer"
-              style={{ justifyContent: "center", width: "100%" }}
+              style={{
+                width: "100%",
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill,minmax(45%, 1fr))",
+                gap: "10px",
+              }}
             >
               {ProfessionalInfo.map((item, index) =>
                 item.select ? (
                   <TextField
+                    key={index}
                     sx={{
                       borderRadius: "15px",
                       color: "white",
