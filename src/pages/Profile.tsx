@@ -162,14 +162,21 @@ export function Profile() {
       </div>
 
       <Paper
+        elevation={4}
         className="flex align-center drt-column"
-        sx={{ width: "89%", padding: "20px 0" }}
+        sx={{
+          width: "89%",
+          padding: "20px 0",
+          marginBottom: "40px",
+          borderRadius: "30px",
+        }}
       >
         <Box
           sx={{
             height: "130px",
             width: "130px",
             borderRadius: "50%",
+            marginBottom: "40px",
             overflow: "hidden",
           }}
         >
@@ -356,6 +363,19 @@ export function Profile() {
             </div>
           </Box>
         </Box>
+
+        <Button
+          variant="contained"
+          sx={{
+            background: "green",
+            color: "white",
+            fontWeight: "semi-bold",
+            mt: "40px",
+          }}
+        >
+          {" "}
+          Sauvegarder{" "}
+        </Button>
       </Paper>
     </div>
   );
