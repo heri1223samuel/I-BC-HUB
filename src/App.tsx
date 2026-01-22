@@ -2,7 +2,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Content from "./Content";
 import { ThemeContextProvider } from "./contexts/ThemeContext";
 import "./i18n";
-import { Article } from "./pages/article";
+import { Article } from "./pages/Article";
 import { Emission } from "./pages/Emission";
 import { Home } from "./pages/Home";
 import { Live } from "./pages/Live";
