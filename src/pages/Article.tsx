@@ -449,7 +449,8 @@ export function Article() {
                     style={{
                       display: cat ? "flex" : "none",
                       color: "white",
-                      background: "red",                      borderRadius: "50%",
+                      background: "red",
+                      borderRadius: "50%",
                       position: "absolute",
                       top: "-10px",
                       cursor: "pointer",
@@ -546,8 +547,8 @@ export function Article() {
         <Button
           sx={{
             marginTop: "40px",
-            fontWeight: "semi-bold",
-            background: "#df2e43",
+            fontWeight: "bold",
+            background: "rgba(255, 21, 48, 1)",
           }}
           variant="contained"
         >

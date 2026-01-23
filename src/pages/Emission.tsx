@@ -1,12 +1,14 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Paper, Typography, useTheme } from "@mui/material";
 import { Bell, PanelLeftOpen, PanelRightOpen, Search } from "lucide-react";
 import { useEffect } from "react";
 import { useThemeContext } from "../contexts/ThemeContext";
 import "../style/Home.css";
+import { randomEmission } from "../data/emission";
+import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
 export function Emission() {
-  const { openNavigation, toggleNavigation } = useThemeContext();
-
+  const { openNavigation, toggleNavigation, media } = useThemeContext();
+  const theme = useTheme();
   useEffect(() => {
     document.title = "Notre Emission";
   });
@@ -84,6 +86,74 @@ export function Emission() {
           </div>
         </Box>
       </div>
+      <Box
+        sx={{
+          width: "90%",
+          padding: "30px 20px",
+          borderRadius: "30px",
+          background: theme.palette.background.paper,
+        }}
+      >
+        <Typography
+          sx={{
+            fontSize: "25px",
+            fontFamily: "arial",
+            fontWeight: "semi-bold",
+          }}
+        >
+          Nos émissions
+        </Typography>
+        <div
+          style={{
+            display: "grid",
+            gap: "20px",
+            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+          }}
+        >
+          {randomEmission.map((article, index) => (
+            <Paper
+              elevation={5}
+              sx={{
+                textAlign: "left",
+                borderRadius: "30px",
+                overflow: "hidden",
+              }}
+            >
+              <Box
+                sx={{
+                  overflow: "hidden",
+                  height: "210px",
+                  width: "100%",
+                  "&:hover": {
+                    transform: "scale(1.07)",
+                  },
+                }}
+              >
+                <ImageWithFallback
+                  src={media[article.image]}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+              </Box>
+              <Typography sx={{ margin: "20px 10px 0px", fontSize: "20px" }}>
+                {article.title}
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "rgba(101, 101, 101, 1)",
+                  margin: "10px 10px 30px",
+                }}
+              >
+                {article.description}
+              </Typography>
+            </Paper>
+          ))}
+        </div>
+      </Box>
     </div>
   );
 }

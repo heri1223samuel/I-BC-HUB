@@ -12,9 +12,11 @@ import tourisme from "../assets/image/tourisme.jpg";
 import tsara_kaly from "../assets/image/trarakaly.jpg";
 import user from "../assets/user.avif";
 import logo from "../logo.png";
+import journal_dune_manman from "../assets/image/JUM.jpg";
 
 const sharedMedia = {
   user,
+  journal_dune_manman,
   menaMasoandro,
   i_vazo,
   tsara_kaly,

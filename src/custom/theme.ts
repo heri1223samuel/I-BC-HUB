@@ -18,8 +18,8 @@ export const getTheme = (mode: "light" | "dark") => {
         contrastText: "#FFFFFF",
       },
       background: {
-        default: mode === "light" ? "#F9FAFB" : "#111827",
-        paper: mode === "light" ? "#FFFFFF" : "#ffffff",
+        default: mode === "light" ? "#F9FAFB" : "#ffffffff",
+        paper: mode === "light" ? "#FFFFFF" : "#eaeaeaff",
       },
       text: {
         primary: mode === "light" ? "#111827" : "#000000",
